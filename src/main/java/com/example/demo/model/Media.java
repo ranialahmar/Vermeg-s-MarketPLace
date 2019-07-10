@@ -1,13 +1,13 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-
 import java.util.Set;
 
 
@@ -23,10 +23,11 @@ public class Media  implements Serializable {
     private String contentType;
     private String Filepath;
 
+
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "media", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "mediaref")
+    @JsonIgnore
     private Set<Product> product=new HashSet<Product>();
-
-
     @Lob
     private byte[] data;
 
@@ -44,7 +45,8 @@ public class Media  implements Serializable {
         this.Filepath=Filepath;
 
     }
-    public String getContentType(){
+    public String getContentType()
+    {
         return contentType;
     }
     public byte[] getData(){

@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,15 +33,27 @@ public class Users implements Serializable {
     private  String Password ;
     private String PasswordConfirm;
 
-    @OneToMany(cascade=CascadeType.ALL)
+   /* @OneToMany(cascade=CascadeType.ALL)
     @JoinTable(name="User_Role", joinColumns={@JoinColumn(name="User_ID", referencedColumnName="id")}
             , inverseJoinColumns={@JoinColumn(name="Role_ID", referencedColumnName="id")})
-    private Set<Role> roles;
+    private Set<Role> roles;*/
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "users", cascade = CascadeType.ALL)
+    @JsonManagedReference(value="commentref")
     private Set<Comment> comments=new HashSet<Comment>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", nullable =false)
+    @JsonBackReference(value="roleref")
+    private Role role;
 
+
+    public Users(){}
+
+    public Users(String email, String Password){
+        this.Password=Password;
+        this.Email=email;
+    }
 
 
 
@@ -54,7 +66,7 @@ public class Users implements Serializable {
              Long PostalCode ,
            String Email,
             String Password ,
-             String PasswordConfirm, Long user_id){
+             String PasswordConfirm, Long role_id){
         this.Username=Username;
         this.Position=Position;  this.LinkedinUrl=LinkedinUrl;  this.CompanyName=CompanyName;  this.Country=Country;  this.City=City;
         this.PostalCode=PostalCode;   this.Email=Email;   this.Password=Password;
@@ -85,13 +97,13 @@ public class Users implements Serializable {
         return this.Position;
      }
 
-    public void setLinkedin(String LinkUrl)
+    /*public void setLinkedin(String LinkUrl)
     {
         this.LinkedinUrl=LinkUrl;
     }
     public String getLinkUrl(){
         return this.LinkedinUrl;
-    }
+    }*/
 
     public void setCompanyName(String CompanyName){
         this.CompanyName=CompanyName;
@@ -113,12 +125,12 @@ public class Users implements Serializable {
         return this.Country;
     }
 
-    public void setPostCode(Long PostCode){
+    /*public void setPostCode(Long PostCode){
         this.PostalCode=PostCode;
     }
     public Long getPostCode(){
         return this.PostalCode;
-    }
+    }*/
 
     public void setEmail(String Email){
         this.Email=Email;
@@ -149,4 +161,7 @@ public class Users implements Serializable {
     public Set<Comment> getComments() {
         return comments;
     }
+    public Role getRole() {return role;}
+    public void setRole(Role role) {this.role = role;}
+
 }

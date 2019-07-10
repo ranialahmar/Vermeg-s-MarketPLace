@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +20,10 @@ public class Category {
     private Long id;
     private String name;
 
+
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonManagedReference(value="categref")
+    @JsonIgnore
     private Set<Product> products=new HashSet<Product>();
 
     public Category() {

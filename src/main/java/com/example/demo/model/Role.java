@@ -4,10 +4,12 @@ package com.example.demo.model;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.aspectj.apache.bcel.classfile.Code;
+import com.fasterxml.jackson.annotation.*;
 
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -23,6 +25,9 @@ public class Role {
     private String role;
 
 
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "role", cascade = CascadeType.ALL)
+    @JsonManagedReference(value="roleref")
+    private Set<Users> user=new HashSet<Users>();
 
  Role(){};
 
@@ -43,12 +48,12 @@ public class Role {
     }
 
 
-   /* public Set<Users> getUsers() {
-        return users;
+    public Set<Users> getUsers() {
+        return user;
     }
 
-    public void setUsers(Set users) {
-        this.users = users;
-    }*/
+    public void setUsers(Set user) {
+        this.user = user;
+    }
 }
 
