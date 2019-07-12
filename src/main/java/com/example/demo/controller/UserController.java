@@ -67,17 +67,20 @@ public class UserController {
         RefUsr_Role usrrole=new RefUsr_Role();
 
         Role role=roleRepository.findRolesById(role_id);
-        if( new BCryptPasswordEncoder().matches(users.getPassword(),new BCryptPasswordEncoder().encode(users.getPassword()))){
+        /*if( new BCryptPasswordEncoder().matches(users.getPassword(),new BCryptPasswordEncoder().encode(users.getPassword()))){
             System.out.println("done");
-        }
-        if(role != null && (users.getPassword()==users.getPasswordConfirm())){
+        }*/
+        if(role != null ){
         users.setRole(role);
        //System.out.println(new BCryptPasswordEncoder().encode(users.getPassword()));
-        users.setPassword( new BCryptPasswordEncoder().encode(users.getPassword()));
+            String encpwd= new BCryptPasswordEncoder().encode(users.getPassword());
+        users.setPassword( encpwd);
+        users.setPasswordConfirm( encpwd);
         usrrole.setUsr(users);
         usrrole.setRol(role);
         usersRepository.save(users);
         refRepository.save(usrrole);
+
         return "user added successfully ";
         }
         else
@@ -100,7 +103,7 @@ public class UserController {
 
 
 
-    @PutMapping("/prod/update/{id}")
+    @PutMapping("/user/update/{id}")
     public ResponseEntity<Users> update(@PathVariable Long id , @Valid @RequestBody Users prod , @RequestParam Long role_id){
 
         Role role=roleRepository.findRolesById(role_id);

@@ -110,14 +110,13 @@ public class Users implements Serializable {
         return this.Position;
      }
 
-    /*public void setLinkedin(String LinkUrl)
+    public void setLinkedinUrl(String LinkUrl)
     {
         this.LinkedinUrl=LinkUrl;
     }
-    public String getLinkUrl(){
+    public String getLinkedinUrl(){
         return this.LinkedinUrl;
-    }*/
-
+    }
     public void setCompanyName(String CompanyName){
         this.CompanyName=CompanyName;
     }
@@ -138,12 +137,12 @@ public class Users implements Serializable {
         return this.Country;
     }
 
-    /*public void setPostCode(Long PostCode){
+    public void setPostalCode(Long PostCode){
         this.PostalCode=PostCode;
     }
-    public Long getPostCode(){
+    public Long getPostalCode(){
         return this.PostalCode;
-    }*/
+    }
 
     public void setEmail(String Email){
         this.Email=Email;
