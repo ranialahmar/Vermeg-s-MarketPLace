@@ -23,7 +23,6 @@ public class Category {
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "category", cascade = CascadeType.ALL)
     @JsonManagedReference(value="categref")
-    @JsonIgnore
     private Set<Product> products=new HashSet<Product>();
 
     public Category() {

@@ -2,24 +2,68 @@ package com.example.demo.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 
 @Entity
 @Getter
 @Setter
-public class Comment {
+@Data
+public class Comment  implements Serializable {
 @Id
-@GeneratedValue
+@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String comment;
-    private String Date;
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date date;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference(value="commentref")
+   // @JsonIgnore
     private Users users;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    @JsonBackReference(value="commentprod")
+    //@JsonIgnore
+    private Product prodd;
+
+   public Comment(){}
+
+/*public Comment(String comment, Product p){
+        this.prodd=p;
+        this.comment=comment;
+}
+
+    public Comment(String comment, Date
+            date, Long pro){
+this.date=date;
+        this.comment=comment;
+        this.id=pro;
+    }
+   /*public Comment(Product prodd , Users user){this.users=user;
+    this.prodd=prodd;}
+
+    public void setProd(Product prod){
+        this.prodd=prod;
+    }
+    public Product getProd(){
+        return this.prodd;
+    }
+/*
+    public void setUser(Users user){
+        this.users=user;
+    }
+    public Users getUser(){
+        return this.users;
+    }
+*/
 }

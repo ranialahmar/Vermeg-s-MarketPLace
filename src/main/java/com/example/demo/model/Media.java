@@ -26,8 +26,9 @@ public class Media  implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "media", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "mediaref")
-    @JsonIgnore
+    //@JsonIgnore
     private Set<Product> product=new HashSet<Product>();
+
     @Lob
     private byte[] data;
 

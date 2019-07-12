@@ -2,17 +2,20 @@ package com.example.demo.controller;
 
 
 import com.example.demo.model.Role;
+import com.example.demo.model.RefUsr_Role;
 import com.example.demo.model.Users;
+import com.example.demo.repository.RefRepository;
 import com.example.demo.repository.RoleRepository;
+import com.example.demo.repository.RefRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.example.demo.repository.UsersRepository;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
-
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -24,6 +27,9 @@ public class UserController {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private RefRepository refRepository;
 
     @GetMapping(value ="/email/{email}")
     @ResponseBody
@@ -38,7 +44,9 @@ public class UserController {
     @GetMapping(value ="/allUsers")
     public List<Users> getAllUs()
     {
-        return usersRepository.findAll();
+
+        return  usersRepository.findAll();
+
     }
 
     @GetMapping(value ="/User/{id}")
@@ -56,16 +64,25 @@ public class UserController {
 
     @PostMapping(value={"/add"})
     public String AddUsers(@RequestBody final Users users ,@RequestParam Long role_id){
+        RefUsr_Role usrrole=new RefUsr_Role();
 
         Role role=roleRepository.findRolesById(role_id);
-        if(role != null){
+        if( new BCryptPasswordEncoder().matches(users.getPassword(),new BCryptPasswordEncoder().encode(users.getPassword()))){
+            System.out.println("done");
+        }
+        if(role != null && (users.getPassword()==users.getPasswordConfirm())){
         users.setRole(role);
+       //System.out.println(new BCryptPasswordEncoder().encode(users.getPassword()));
+        users.setPassword( new BCryptPasswordEncoder().encode(users.getPassword()));
+        usrrole.setUsr(users);
+        usrrole.setRol(role);
         usersRepository.save(users);
+        refRepository.save(usrrole);
         return "user added successfully ";
         }
         else
             {
-            return"User must be admin or Client ";
+            return"verify your informations ";
         }
 
 

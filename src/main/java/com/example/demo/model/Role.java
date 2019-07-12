@@ -24,6 +24,11 @@ public class Role {
     private Long id;
     private String role;
 
+    @OneToMany(mappedBy = "rol")
+    @JsonManagedReference(value="rolrol")
+    Set<RefUsr_Role> UsrRol;
+
+
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "role", cascade = CascadeType.ALL)
     @JsonManagedReference(value="roleref")

@@ -5,10 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -20,7 +23,6 @@ public class Users implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private Long id;
     private String Username;
     private String Position;
@@ -33,10 +35,7 @@ public class Users implements Serializable {
     private  String Password ;
     private String PasswordConfirm;
 
-   /* @OneToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="User_Role", joinColumns={@JoinColumn(name="User_ID", referencedColumnName="id")}
-            , inverseJoinColumns={@JoinColumn(name="Role_ID", referencedColumnName="id")})
-    private Set<Role> roles;*/
+/*
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "users", cascade = CascadeType.ALL)
     @JsonManagedReference(value="commentref")
@@ -45,8 +44,22 @@ public class Users implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable =false)
     @JsonBackReference(value="roleref")
-    private Role role;
+    private Role role;*/
 
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "usr", cascade = CascadeType.ALL)
+    @JsonManagedReference(value="usrusr")
+    List<RefUsr_Role> UsrRol;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "users", cascade = CascadeType.ALL)
+    @JsonManagedReference(value="commentref")
+    private List<Comment> comments;
+
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", nullable =false)
+    @JsonBackReference(value="roleref")
+    private Role role;
 
     public Users(){}
 
@@ -158,7 +171,7 @@ public class Users implements Serializable {
     }
 
 
-    public Set<Comment> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
     public Role getRole() {return role;}
