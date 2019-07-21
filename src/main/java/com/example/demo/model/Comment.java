@@ -2,7 +2,6 @@ package com.example.demo.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +21,7 @@ public class Comment  implements Serializable {
     private Long id;
     private String comment;
     @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date date;
+    private Date date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

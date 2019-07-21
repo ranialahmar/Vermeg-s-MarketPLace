@@ -6,26 +6,19 @@ import com.example.demo.model.Product;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.MediaRepository;
 import com.example.demo.repository.ProductRepository;
-import com.example.demo.repository.UsersRepository;
-//import com.example.demo.repository.fileEntityRepository;
-//import com.google.gson.JsonArray;
-import com.oracle.webservices.internal.api.message.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping(value="/products")
+@RequestMapping(value="/")
 @CrossOrigin(value = {"*"}, exposedHeaders = {"Content-Disposition"})
 
 
@@ -44,14 +37,15 @@ public class ProductController {
 
 
 
-    @GetMapping(value = "/allProducts")
+    @GetMapping(value = "/products")
     public List<Product> getAllProd() {
+
         return productRepository.findAll();
     }
 
 
 
-    @GetMapping(value = "/prod/{Prod_id}")
+    @GetMapping(value = "/product/{Prod_id}")
     @ResponseBody
     public ResponseEntity<Object> getProduct(@PathVariable Long Prod_id) {
         Product ProdL = productRepository.findProductById(Prod_id);
@@ -65,20 +59,24 @@ public class ProductController {
     }
 
 
-    @GetMapping(value ={ "/CategoryId/{Cat_id}"})
+    @GetMapping(value ={ "/product"})
     @ResponseBody
-    public ResponseEntity<Object> getProd(@PathVariable Long Cat_id) {
+    public ResponseEntity<Object> getProd(@RequestParam Long Cat_id) {
         List<Product> prodcat = productRepository.findAll();
         List<Product> p = prodcat.stream().filter(prod -> prod.getCategory().getId() == Cat_id).collect(Collectors.toList());
+if(p!=null){
         return ResponseEntity.ok()
                 .body(p);
-    }
+    }  else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product was not fount");
+    }}
 
 
 
 
 
-    @PostMapping(value = "/addProd")
+
+    @PostMapping(value = "/product")
     public String AddProds(@RequestBody final Product product ,@RequestParam Long category_id,@RequestParam Long file_id) {
 
         Category category=categoryRepository.findCategoriesById(category_id);
@@ -93,9 +91,11 @@ public class ProductController {
             return "product not able to be added ";
         }
 
+
+
     }
 
-    @DeleteMapping("/prod/delete/{idp}")
+    @DeleteMapping("/product/{idp}")
     public String delete(@PathVariable Long idp){
         Product prod = productRepository.findProductById(idp);
         productRepository.delete(prod);
@@ -104,7 +104,7 @@ public class ProductController {
     }
 
 
-    @PutMapping("/prod/update/{id}")
+    @PutMapping("/product/{id}")
     public ResponseEntity<Product> update(@PathVariable Long id ,@Valid @RequestBody Product prod,@RequestParam Long media_id,@RequestParam Long category_id){
         Product product = productRepository.findProductById(id);
         Category category =categoryRepository.findCategoriesById(category_id);

@@ -28,16 +28,16 @@ public class MockitoControllerTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
+    /*@Test
     public void testGetUserById() {
-        Users u = new Users();
+       /* Users u = new Users();
         u.setId(9L);
         when(usersRepository.findUsersById(9l)).thenReturn(u);
-        Users user = userController.getUser(9L);
+        //Users user = userController.getUser(9L);
         verify(usersRepository).findUsersById(9L);
         assertEquals(9L, user.getId().longValue());
         System.out.println("verified");
 
 
-    }
+    }*/
 }

@@ -31,9 +31,10 @@ public class RefUsr_Role implements Serializable {
     @JoinColumn(name = "rol_id")
     @JsonBackReference(value="rolrol")
     //@JsonIgnore
-   Role rol;
+    Role rol;
 
    public RefUsr_Role(){};
+
    public RefUsr_Role(Users usr, Role role){
        this.usr=usr;
        this.rol=role;

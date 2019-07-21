@@ -56,7 +56,9 @@ public class Media  implements Serializable {
     public String getFileName(){
         return fileName;
     }
-    public String getFilepath(){return Filepath;}
+    public String getFilepath(){
+        return Filepath;
+    }
 
     public Set<Product> getProducts() {
         return product;

@@ -5,14 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import com.fasterxml.jackson.annotation.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 
 @Entity
@@ -44,7 +42,8 @@ public class Users implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable =false)
     @JsonBackReference(value="roleref")
-    private Role role;*/
+    private Role role;
+*/
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "usr", cascade = CascadeType.ALL)
     @JsonManagedReference(value="usrusr")
@@ -70,20 +69,16 @@ public class Users implements Serializable {
 
 
 
-    public Users( String Username,
-           String Position,
-            String LinkedinUrl,
-           String CompanyName,
-            String Country ,
-           String City ,
-             Long PostalCode ,
-           String Email,
-            String Password ,
-             String PasswordConfirm, Long role_id){
+    public Users( String Username, String Position, String LinkedinUrl, String CompanyName, String Country , String City , Long PostalCode , String Email, String Password , String PasswordConfirm, Long role_id){
         this.Username=Username;
-        this.Position=Position;  this.LinkedinUrl=LinkedinUrl;  this.CompanyName=CompanyName;  this.Country=Country;  this.City=City;
-        this.PostalCode=PostalCode;   this.Email=Email;   this.Password=Password;
-
+        this.Position=Position;
+        this.LinkedinUrl=LinkedinUrl;
+        this.CompanyName=CompanyName;
+        this.Country=Country;
+        this.City=City;
+        this.PostalCode=PostalCode;
+        this.Email=Email;
+        this.Password=Password;
 
     }
 
@@ -106,6 +101,7 @@ public class Users implements Serializable {
     public void setPosition(String Position){
         this.Position=Position;
     }
+
      public String getPosition(){
         return this.Position;
      }
@@ -114,15 +110,19 @@ public class Users implements Serializable {
     {
         this.LinkedinUrl=LinkUrl;
     }
+
     public String getLinkedinUrl(){
         return this.LinkedinUrl;
     }
+
     public void setCompanyName(String CompanyName){
         this.CompanyName=CompanyName;
     }
+
     public String getCompanyName(){
         return this.CompanyName;
     }
+
     public void setCity(String City){
         this.City=City;
     }
@@ -160,7 +160,7 @@ public class Users implements Serializable {
         return Password;
     }
 
-    @Transient
+    //@Transient
     public String getPasswordConfirm() {
         return PasswordConfirm;
     }
@@ -173,7 +173,13 @@ public class Users implements Serializable {
     public List<Comment> getComments() {
         return comments;
     }
-    public Role getRole() {return role;}
-    public void setRole(Role role) {this.role = role;}
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
 }

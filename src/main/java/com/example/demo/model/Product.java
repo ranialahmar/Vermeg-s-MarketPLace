@@ -3,15 +3,12 @@ package com.example.demo.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 
 @Entity
@@ -31,13 +28,9 @@ public class Product {
     private java.util.Date Date_update;
 
 
-
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "prodd", cascade = CascadeType.ALL)
     @JsonManagedReference(value="commentprod")
-
-
     private List<Comment> comments;
-
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -75,9 +68,9 @@ public class Product {
         return comments;
     }
 
-public void setCategory(Category category){
+    public void setCategory(Category category){
         this.category=category;
-}
+    }
     public Category getCategory() {
         return category;
     }

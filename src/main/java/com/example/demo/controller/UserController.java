@@ -6,7 +6,6 @@ import com.example.demo.model.RefUsr_Role;
 import com.example.demo.model.Users;
 import com.example.demo.repository.RefRepository;
 import com.example.demo.repository.RoleRepository;
-import com.example.demo.repository.RefRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +14,12 @@ import com.example.demo.repository.UsersRepository;
 
 import javax.validation.Valid;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 
 @RestController
-@RequestMapping(value="/users")
+@RequestMapping(value="/")
+@CrossOrigin(value = {"*"}, exposedHeaders = {"Content-Disposition"})
 public class UserController {
 
     @Autowired
@@ -32,9 +32,9 @@ public class UserController {
     private RefRepository refRepository;
 
 
-    @GetMapping(value ="/email/{email}")
+    @GetMapping(value ="/user")
     @ResponseBody
-    public ResponseEntity<Optional<Users>> getUser(@PathVariable String email) {
+    public ResponseEntity<Optional<Users>> getUser(@RequestParam  String email) {
         List<Users> userL=usersRepository.findAll();
        Optional<Users> p = userL.stream().filter(prod ->email.equals(prod.getEmail())).findAny();
         return ResponseEntity.ok()
@@ -42,28 +42,32 @@ public class UserController {
 
 
     }
-    @GetMapping(value ="/allUsers")
-    public List<Users> getAllUs()
+    @GetMapping(value ="/Users")
+    public ResponseEntity<List<Users>> getAllUs()
     {
-
-        return  usersRepository.findAll();
-
+        List<Users>p=usersRepository.findAll();
+        return ResponseEntity.ok()
+                .body(p);
     }
 
     @GetMapping(value ="/User/{id}")
     @ResponseBody
-    public Users getUser(@PathVariable Long id) {
+    public  ResponseEntity<Users> getUser(@PathVariable Long id) {
+
         Users userL = usersRepository.findUsersById(id);
         if (userL != null) {
-            return userL;}
+            return ResponseEntity.ok()
+                    .body(userL);}
         else {
-            return new Users();}
+            return ResponseEntity.ok()
+                    .body(new Users());
+        }
     }
 
 
 
 
-    @PostMapping(value={"/add"})
+    @PostMapping(value={"/user"})
     public String AddUsers(@RequestBody final Users users ,@RequestParam Long role_id){
         RefUsr_Role usrrole=new RefUsr_Role();
 
@@ -73,8 +77,7 @@ public class UserController {
         }*/
         if(role != null ){
         users.setRole(role);
-       //System.out.println(new BCryptPasswordEncoder().encode(users.getPassword()));
-            String encpwd= new BCryptPasswordEncoder().encode(users.getPassword());
+        String encpwd= new BCryptPasswordEncoder().encode(users.getPassword());
         users.setPassword( encpwd);
         users.setPasswordConfirm( encpwd);
         usrrole.setUsr(users);
@@ -93,32 +96,32 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/user/delete/{id}")
+    @DeleteMapping("/user/{id}")
     public String delete(@PathVariable Long id ){
         Users user = usersRepository.findUsersById(id);
         usersRepository.delete(user);
-        return "deleted";
+        return "user is deleted";
 
     }
 
 
 
 
-    @PutMapping("/user/update/{id}")
-    public ResponseEntity<Users> update(@PathVariable Long id , @Valid @RequestBody Users prod , @RequestParam Long role_id){
+    @PutMapping("/user/{id}")
+    public ResponseEntity<Users> update(@PathVariable Long id , @Valid @RequestBody Users usr , @RequestParam Long role_id){
 
         Role role=roleRepository.findRolesById(role_id);
         Users user = usersRepository.findUsersById(id);
-        user.setEmail(prod.getEmail());
-        user.setCity(prod.getCity());
-        user.setComments(prod.getComments());
-        user.setCompanyName(prod.getCompanyName());
-        user.setLinkedinUrl(prod.getLinkedinUrl());
-        user.setCountry(prod.getCountry());
-        user.setUsername(prod.getUsername());
-        user.setPassword(prod.getPassword());
-        user.setPosition(prod.getPosition());
-        user.setPostalCode(prod.getPostalCode());
+        user.setEmail(usr.getEmail());
+        user.setCity(usr.getCity());
+        user.setComments(usr.getComments());
+        user.setCompanyName(usr.getCompanyName());
+        user.setLinkedinUrl(usr.getLinkedinUrl());
+        user.setCountry(usr.getCountry());
+        user.setUsername(usr.getUsername());
+        user.setPassword(usr.getPassword());
+        user.setPosition(usr.getPosition());
+        user.setPostalCode(usr.getPostalCode());
         user.setRole(role);
         usersRepository.save(user);
         return ResponseEntity.ok(user);

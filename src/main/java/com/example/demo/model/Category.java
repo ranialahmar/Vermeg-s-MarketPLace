@@ -43,4 +43,6 @@ public class Category {
 
     public Set<Product> getProducts() {
         return products;
-    }}
+    }
+
+}

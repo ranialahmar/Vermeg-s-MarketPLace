@@ -6,16 +6,14 @@ import com.example.demo.repository.CommRepository;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @RestController
-@RequestMapping(value="/comments")
+@RequestMapping(value="/")
 @CrossOrigin(value = {"*"}, exposedHeaders = {"Content-Disposition"})
 public class CommController {
 
@@ -31,14 +29,14 @@ public class CommController {
     ProductRepository productRepository;
 
 
-    @GetMapping(value = "/allComments")
+    @GetMapping(value = "/comments")
     public List<Comment> getAllcomm() {
         return commRepository.findAll();
     }
 
 
 
-    @GetMapping(value ="/user_id/{id_user}")
+    @GetMapping(value ="/comment/{id_user}")
     @ResponseBody
     public   ArrayList<Object>getUser(@PathVariable Long id_user) {
         ArrayList<Object> com = new ArrayList<>();
@@ -55,7 +53,7 @@ public class CommController {
         return (com);
     }
 
-    @GetMapping(value ="/prod_id/{idp}")
+    @GetMapping(value ="/comment/{idp}")
     @ResponseBody
     public  ArrayList<Object> getComm(@PathVariable Long idp) {
         List<Comment> comm=commRepository.findAll();
@@ -75,7 +73,7 @@ public class CommController {
     }
 
 
-    @PostMapping(value = "/addComment")
+    @PostMapping(value = "/comment")
     public String AddComm(@RequestBody final Comment commentt , @RequestParam Long user_id, @RequestParam Long prod_id) {
 
 
@@ -92,7 +90,8 @@ public class CommController {
         }
 
     }
-    @DeleteMapping("/comm/delete/{idc}")
+
+    @DeleteMapping("/comment/{idc}")
     public String delete(@PathVariable Long idc){
         Comment comm = commRepository.findCommentsById(idc);
         commRepository.delete(comm);
