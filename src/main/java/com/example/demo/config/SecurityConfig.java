@@ -10,9 +10,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
-
+@EnableWebMvc
 @EnableJpaRepositories(basePackages = "com.example.demo.repository")
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -27,24 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
         ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 
 
 
@@ -53,4 +39,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-}
+

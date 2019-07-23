@@ -19,9 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/")
-@CrossOrigin(value = {"*"}, exposedHeaders = {"Content-Disposition"})
-
-
+@CrossOrigin(value = {"*"},allowCredentials="true",allowedHeaders = {"*"},exposedHeaders = {"Content-Disposition"})
 public class ProductController {
 
     @Autowired
@@ -76,14 +74,16 @@ if(p!=null){
 
 
 
-    @PostMapping(value = "/product")
-    public String AddProds(@RequestBody final Product product ,@RequestParam Long category_id,@RequestParam Long file_id) {
+    @PostMapping(value = "/product/{category_id}")
+    public String AddProds(@RequestBody final Product product , @PathVariable  Long category_id) {
 
         Category category=categoryRepository.findCategoriesById(category_id);
-        Media mediaa=mediaRepository.findMediaById(file_id);
-        if(category != null && mediaa != null){
+       // Media mediaa=mediaRepository.findMediaById(file_id);
+        if(category != null
+                //&& mediaa != null
+        ){
             product.setCategory(category);
-            product.setMedia(mediaa);
+            //product.setMedia(mediaa);
             productRepository.save(product);
             return "product added successfully ";
         }
@@ -104,14 +104,17 @@ if(p!=null){
     }
 
 
-    @PutMapping("/product/{id}")
-    public ResponseEntity<Product> update(@PathVariable Long id ,@Valid @RequestBody Product prod,@RequestParam Long media_id,@RequestParam Long category_id){
+    @PutMapping(value = "/product/{id}")
+    public ResponseEntity<Product> update( @RequestBody Product prod,@PathVariable Long id
+                                          //@RequestParam Long media_id,
+                                          //@PathVariable Long category_id
+                                          ){
         Product product = productRepository.findProductById(id);
-        Category category =categoryRepository.findCategoriesById(category_id);
-        Media media=mediaRepository.findMediaById(media_id);
+        //Category category =categoryRepository.findCategoriesById(category_id);
+        //Media media=mediaRepository.findMediaById(media_id);
         product.setName(prod.getName());
-        product.setCategory(category);
-        product.setMedia(media);
+       // product.setCategory(category);
+        //product.setMedia(media);
         product.setDate_delivary(prod.getDate_delivary());
         product.setDescription(prod.getDescription());
         product.setDate_update(prod.getDate_update());

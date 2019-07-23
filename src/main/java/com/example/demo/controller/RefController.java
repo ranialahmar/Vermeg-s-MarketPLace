@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/")
-@CrossOrigin(value = {"*"}, exposedHeaders = {"Content-Disposition"})
+@CrossOrigin(value = {"*"},allowCredentials="true",allowedHeaders = {"*"}, exposedHeaders = {"Content-Disposition"})
 public class RefController {
 
 
@@ -27,16 +27,17 @@ public class RefController {
     public
     List<UserRole> getAllref()
 
-    {   Long Uid=null;
+    {   Long reff=null;
+        Long Uid=null;
         Long Rid=null;
         List nref= new ArrayList();
         List<RefUsr_Role> userL= refRepository.findAll();
         for (RefUsr_Role ref:userL
              ) {
-
+             reff=ref.getRefId();
              Uid =ref.getUsr().getId();
              Rid=ref.getRol().getId();
-             UserRole hello=new UserRole(Rid,Uid);
+             UserRole hello=new UserRole(reff,Rid,Uid);
              nref.add(hello);
         }
 

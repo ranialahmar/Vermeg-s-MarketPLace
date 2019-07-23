@@ -19,7 +19,8 @@ import java.util.*;
 
 @RestController
 @RequestMapping(value="/")
-@CrossOrigin(value = {"*"}, exposedHeaders = {"Content-Disposition"})
+
+@CrossOrigin(value = {"*"},allowCredentials="true",allowedHeaders = {"*"},exposedHeaders = {"Content-Disposition"})
 public class UserController {
 
     @Autowired
@@ -32,22 +33,21 @@ public class UserController {
     private RefRepository refRepository;
 
 
-    @GetMapping(value ="/user")
+    @GetMapping(value ="/user/{name}")
     @ResponseBody
-    public ResponseEntity<Optional<Users>> getUser(@RequestParam  String email) {
+    public ResponseEntity<Optional<Users>> getUser(@PathVariable  String name) {
         List<Users> userL=usersRepository.findAll();
-       Optional<Users> p = userL.stream().filter(prod ->email.equals(prod.getEmail())).findAny();
+       Optional<Users> p = userL.stream().filter(prod ->name.equals(prod.getUsername())).findAny();
         return ResponseEntity.ok()
                 .body(p);
 
 
     }
     @GetMapping(value ="/Users")
-    public ResponseEntity<List<Users>> getAllUs()
+    public List<Users> getAllUs()
     {
         List<Users>p=usersRepository.findAll();
-        return ResponseEntity.ok()
-                .body(p);
+        return p;
     }
 
     @GetMapping(value ="/User/{id}")
@@ -67,8 +67,8 @@ public class UserController {
 
 
 
-    @PostMapping(value={"/user"})
-    public String AddUsers(@RequestBody final Users users ,@RequestParam Long role_id){
+    @PostMapping(value={"/user/{role_id}"})
+    public String AddUsers(@RequestBody final Users users ,@PathVariable Long role_id){
         RefUsr_Role usrrole=new RefUsr_Role();
 
         Role role=roleRepository.findRolesById(role_id);

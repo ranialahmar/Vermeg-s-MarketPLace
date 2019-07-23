@@ -9,9 +9,11 @@ import java.io.Serializable;
 @Data
 public class UserRole implements Serializable {
 
+    private Long ref_id;
     private Long role_id;
     private Long user_id;
-    public UserRole(Long rid , Long uid){
+    public UserRole(Long ref_id,Long rid , Long uid){
+        this.ref_id=ref_id;
         this.role_id=rid;
         this.user_id=uid;
     }

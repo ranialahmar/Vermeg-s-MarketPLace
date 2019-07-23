@@ -22,9 +22,9 @@ public class Product {
     private String name;
     private String description;
     private String version;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private java.util.Date Date_delivary;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private java.util.Date Date_update;
 
 
