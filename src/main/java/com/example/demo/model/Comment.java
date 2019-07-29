@@ -20,8 +20,8 @@ public class Comment  implements Serializable {
 @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String comment;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    //@Temporal(TemporalType.TIMESTAMP)
+    private String date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -36,6 +36,13 @@ public class Comment  implements Serializable {
     private Product prodd;
 
    public Comment(){}
+   public Comment(Users user, String comm){
+       this.comment=comm;
+       this.setUsers(user);
+
+
+   }
+
 
 /*public Comment(String comment, Product p){
         this.prodd=p;
@@ -61,8 +68,13 @@ this.date=date;
     public void setUser(Users user){
         this.users=user;
     }
-    public Users getUser(){
+
+ */
+public String getComment(){
+    return this.comment;
+}
+    public Users getUsers(){
         return this.users;
     }
-*/
+
 }

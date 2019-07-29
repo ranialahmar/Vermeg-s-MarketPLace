@@ -4,6 +4,7 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -14,7 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-
+@Data
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,9 +24,9 @@ public class Product {
     private String description;
     private String version;
 
-    private java.util.Date Date_delivary;
+    private String Date_delivary;
 
-    private java.util.Date Date_update;
+    private String Date_update;
 
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "prodd", cascade = CascadeType.ALL)
@@ -34,7 +35,7 @@ public class Product {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false)
+    @JoinColumn(name = "category_id")
     @JsonBackReference(value="categref")
     private Category category;
 
@@ -67,6 +68,7 @@ public class Product {
     public List<Comment> getComments() {
         return comments;
     }
+
 
     public void setCategory(Category category){
         this.category=category;

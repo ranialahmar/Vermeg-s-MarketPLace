@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Category;
+import com.example.demo.model.Comment;
 import com.example.demo.model.Media;
 import com.example.demo.model.Product;
 import com.example.demo.repository.CategoryRepository;
@@ -47,6 +48,8 @@ public class ProductController {
     @ResponseBody
     public ResponseEntity<Object> getProduct(@PathVariable Long Prod_id) {
         Product ProdL = productRepository.findProductById(Prod_id);
+
+
         if (ProdL != null) {
             return ResponseEntity.ok()
                     .body(ProdL);
@@ -57,12 +60,34 @@ public class ProductController {
     }
 
 
+
+
+    @GetMapping(value ={ "/productcateg/{id}"})
+    @ResponseBody
+    public String getrod(@PathVariable Long id ) {
+        Product pp=productRepository.findProductById(id);
+        String category= pp.getCategory().getName();
+        String file= pp.getMedia().getFilepath();
+
+        return category;
+       }
+    @GetMapping(value ={ "/productfile/{id}"})
+    @ResponseBody
+    public String getProdFile(@PathVariable Long id ) {
+        Product pp=productRepository.findProductById(id);
+
+        String file= pp.getMedia().getFilepath();
+
+        return file;
+    }
+
+
     @GetMapping(value ={ "/product"})
     @ResponseBody
     public ResponseEntity<Object> getProd(@RequestParam Long Cat_id) {
         List<Product> prodcat = productRepository.findAll();
         List<Product> p = prodcat.stream().filter(prod -> prod.getCategory().getId() == Cat_id).collect(Collectors.toList());
-if(p!=null){
+        if(p!=null){
         return ResponseEntity.ok()
                 .body(p);
     }  else {

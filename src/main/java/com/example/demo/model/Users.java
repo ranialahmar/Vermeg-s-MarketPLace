@@ -67,7 +67,9 @@ public class Users implements Serializable {
         this.Email=email;
     }
 
-
+public Users(String id){
+        this.Username=id;
+}
 
     public Users( String Username, String Position, String LinkedinUrl, String CompanyName, String Country , String City , Long PostalCode , String Email, String Password , String PasswordConfirm, Long role_id){
         this.Username=Username;

@@ -3,9 +3,10 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Data
 public class Category {
     @Id
     @Column(name = "CATEGORY_ID")
@@ -23,7 +25,7 @@ public class Category {
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "category", cascade = CascadeType.ALL)
     @JsonManagedReference(value="categref")
-    private Set<Product> products=new HashSet<Product>();
+        private List<Product> products;
 
     public Category() {
     }
@@ -41,7 +43,7 @@ public class Category {
     }
 
 
-    public Set<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
