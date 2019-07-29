@@ -19,7 +19,7 @@ class AdminModalUpdate extends Component {
     toggle = () => this.setState({ modalEdit: !this.state.modalEdit });
 
     onSubmit = (id, name, version, date_delivary,date_update,description) => {
-        axios.put("http://localhost:8080/product/"+this.props.infos.id, {
+        axios.put("/product/"+this.props.infos.id, {
             name,
             version,
             date_delivary,

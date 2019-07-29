@@ -588,7 +588,7 @@ class Header extends Component {
                                                             </div>
                                                             <div className="autor__info">
                                                                 <p className="name">
-                                                                    Chris Bent
+                                                                   {this.props.user}
                                                                 </p>
                                                                 <p className="amount">$20.45</p>
                                                             </div>

@@ -23,7 +23,7 @@ export function saveProduct(productToSave) {
 export const loadAllProducts=()=>  dispatch=>
 
 {
-    fetch("http://localhost:8080/products")
+    fetch("/products")
         .then(response=>response.json())
         .then(prod => dispatch({type: PRODUCTS_ALL, payload:prod}))
 }

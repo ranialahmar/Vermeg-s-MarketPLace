@@ -12,7 +12,7 @@ export default class Comments extends Component {
 
     async componentDidMount() {
         try {
-            const response = await axios.get('http://localhost:8080/comments')
+            const response = await axios.get('/comments')
             const apiList = await response.data;
             this.setState({ apiList })
         } catch (error) {

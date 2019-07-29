@@ -5,7 +5,8 @@ import Pagination from "../../components/Pagination/Pagination";
 import '/home/rania/Downloads/React-Ecommerce-App-with-Redux-master (2)/src/components/Header/sty.css';
 import Header from "../../components/Header/Header";
 import Sheader from "../../components/Sheader/Sheadrer";
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter,Link} from "react-router-dom";
+
 import Footer from "../../components/Footer/Footer";
 
 
@@ -89,10 +90,10 @@ const Home = () => {
                                 <div className="cta-content">
                                     <div className="cta-text">
                                         <h2>Ready To Join Our Marketplace!</h2>
-                                        <p>Grow your marketing and be happy with your online business</p>
+
                                     </div>
                                     <div className="cta-btn">
-                                        <a href="#" className="btn btn--md btn-primary">Join Us Today</a>
+                                        <Link to="/register">Join Us Today</Link>
                                     </div>
                                 </div>
                             </div>

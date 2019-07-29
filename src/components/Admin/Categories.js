@@ -12,7 +12,7 @@ export default class Categories extends Component {
 
     async componentDidMount() {
         try {
-            const response = await axios.get('http://localhost:8080/categories')
+            const response = await axios.get('/categories')
             const apiList = await response.data;
             this.setState({ apiList })
         } catch (error) {

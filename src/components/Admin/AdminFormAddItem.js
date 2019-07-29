@@ -25,7 +25,7 @@ class AdminFormAddItem extends Component {
 
 
     onSubmit = (name, description, version,category_id, date_delivary, date_update) => {
-      axios.post('http://localhost:8080/product/'+this.state.category_id, {
+      axios.post('/product/'+this.state.category_id, {
             name,
            description,
             version,
@@ -35,7 +35,6 @@ class AdminFormAddItem extends Component {
             .then(() => {
                 this.setState({success:true})
                 window.location.reload()
-                console.log('addeeeeeeeeeeeed')
             })
             .catch(function (error) {
                 console.log(error);

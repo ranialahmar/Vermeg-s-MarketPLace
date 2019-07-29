@@ -43,7 +43,7 @@ class LoginForm extends Component {
     }
 
     handleSubmit=async ()=>{
-        axios.get("http://localhost:8080/user/"+this.state.name)
+        axios.get("/user/"+this.state.name)
             .then(res=>{
                 console.log(res.data.UsrRol[0].refId);
                 this.setState({id:res.data.UsrRol[0].refId})
@@ -62,7 +62,8 @@ class LoginForm extends Component {
     redirectLoginSuccessListener = () => {
         if (this.state.apiResponse === 'success') {
             return <Redirect to={{
-                pathname: "/produser"
+                pathname: "/produser",
+                state:{name:this.state.name}
             }}
             />
 

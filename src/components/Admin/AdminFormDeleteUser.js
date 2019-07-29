@@ -12,7 +12,7 @@ class AdminFormDeleteUser extends Component {
     }
 
     handleDelete = id => {
-        axios.delete('http://localhost:8080/user/'+id
+        axios.delete('/user/'+id
         )
             .then(response => {
                 console.log(response);

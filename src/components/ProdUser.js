@@ -13,7 +13,7 @@ class ProdUser extends Component{
 
         return(
             <div>
-                <Header navv="user" />
+                <Header navv="user" user={this.props.location.state.name} />
 
                 <Sheader />
                 <div className="filter-area product-filter-area filter-area2">

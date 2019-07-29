@@ -15,7 +15,7 @@ class Admin extends Component {
         };
     }
 componentDidMount() {
-       axios.get("http://localhost:8080/reference/1")
+       axios.get("/reference/1")
             .then(res=>{
                 console.log(res.data);
 

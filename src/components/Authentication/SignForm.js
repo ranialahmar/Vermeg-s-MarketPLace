@@ -67,7 +67,7 @@ class SignForm extends Component {
 
         }
 
-        axios.post('http://localhost:8080/user/2',user)
+        axios.post('/user/2',user)
             .then(res=>{
                  console.log(res.data);
                  this.setState({redirect:true})

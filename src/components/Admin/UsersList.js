@@ -14,13 +14,13 @@ export default class UsersList extends Component {
 
      componentDidMount() {
         try {
-             axios.get('http://localhost:8080/Users').then(res=>{
+             axios.get('/Users').then(res=>{
 
                  console.log(res.data);
             const apiList =res.data;
             this.setState({apiList});
 
-                 axios.get('http://localhost:8080/reference')
+                 axios.get('/reference')
                      .then(resp=> {
 
                          console.log(resp.data);

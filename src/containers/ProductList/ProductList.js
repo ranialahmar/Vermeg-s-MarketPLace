@@ -82,9 +82,8 @@ render() {
 
                         {lis.p.map(brand => (
 
-                                <label className="custom-checkbox text-capitalize"> {brand.name}
                                     <Product key={brand.id} product={brand} id={brand.id} />
-                                </label>
+
 
                         ))}
     </div>

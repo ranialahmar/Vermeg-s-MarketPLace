@@ -15,7 +15,7 @@ export default class AdminTablesItems extends Component {
 
     async componentDidMount() {
         try {
-            const response = await axios.get('http://localhost:8080/products')
+            const response = await axios.get('/products')
             const apiList = await response.data;
             this.setState({ apiList });
             console.log(this.state.apiList[0].comments[0].comment)

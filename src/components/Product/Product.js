@@ -18,7 +18,7 @@ class Product extends Component{
         date_delivary:this.props.product.date_delivary,
         date_update:this.props.product.date_update,
         id:this.props.product.id,
-        comments:this.props.product.comments,
+        comments:[],
         category:'',
        // imag:'',
     redirect:false,
@@ -27,26 +27,27 @@ class Product extends Component{
 
    componentDidMount() {
 
-       axios.get('http://localhost:8080/productcateg/'+this.state.id)
+       axios.get('/productcateg/'+this.state.id)
            .then(res=>
 
                this.setState({category:res.data})
            )
-        axios.get('http://localhost:8080/media/'+this.state.id)
+        axios.get('/media/'+this.state.id)
             .then(response=>{
 
 
                  this.setState({path:response.data});
             })
 
+axios.get("/comment/"+this.state.id) .then(res=>
 
+    this.setState({comments:res.data})
+)
     }
 
 
     handleClick=()=>{
-        console.log(typeof this.state.path);
-    console.log(this.state.id);
-console.log(this.state.path.prop);
+
     this.setState({redirect:true});
 
 
@@ -55,7 +56,6 @@ console.log(this.state.path.prop);
 render()
 {
     const { redirect }= this.state;
-    //const images = require.context('/home/rania/Downloads/React-Ecommerce-App-with-Redux-master (2)/src/images',true);
     if(redirect){
     return( <Redirect  to={{
         pathname: '/prod',
@@ -66,34 +66,65 @@ render()
 
     return (
 
-        <div className=" col-xl-4 col-lg-6 col-md-6">
+        <div className=" col-xl-5 col-lg-8 col-md-8">
 
             <div className="product-single latest-single">
                 <div className="product-thumb">
                             <figure>
-                                <img src={require(`/home/rania/Downloads/React-Ecommerce-App-with-Redux-master (2)/src/images/prodvermeg.jpeg`)} alt="" className="img-fluid"/>
+                                {(() => {
+                                    if (this.state.path==="solife.png") {
+                                        return (
+                                            <img   src={require(`/home/rania/Downloads/React-Ecommerce-App-with-Redux-master (2)/src/images/solife.png`)} alt="" className="img-fluid"/>
+                                        )
+                                    } else if (this.state.path==="megara.png") {
+                                        return (
+                                            <img src={require(`/home/rania/Downloads/React-Ecommerce-App-with-Redux-master (2)/src/images/megara.png`)} alt="" className="img-fluid"/>
+                                        )
+                                    }   else if (this.state.path==="agile.png") {
+                                    return (
+                                    <img src={require(`/home/rania/Downloads/React-Ecommerce-App-with-Redux-master (2)/src/images/agile.png`)} alt="" className="img-fluid"/>
+                                    )
+                                }  else if (this.state.path==="colline.png") {
+                                    return (
+                                    <img src={require(`/home/rania/Downloads/React-Ecommerce-App-with-Redux-master (2)/src/images/colline.png`)} alt="" className="img-fluid"/>
+                                    )
+                                }  else if (this.state.path==="massai.png") {
+                                    return (
+                                    <img src={require(`/home/rania/Downloads/React-Ecommerce-App-with-Redux-master (2)/src/images/massai.png`)} alt="" className="img-fluid"/>
+                                    )
+                                }
+                                else if (this.state.path==="palmyra.png") {
+                                    return (
+                                    <img src={require(`/home/rania/Downloads/React-Ecommerce-App-with-Redux-master (2)/src/images/palmyra.png`)} alt="" className="img-fluid"/>
+                                    )
+                                } else {
+                                        return (
+                                            <img src={require(`/home/rania/Downloads/React-Ecommerce-App-with-Redux-master (2)/src/images/soliam.png`)} alt="" className="img-fluid"/>
+                                        )
+                                    }
+                                })()}
                                     <figcaption>
                                         <ul className="list-unstyled">
 
                                             <li>
-                                                <button onClick={this.handleClick}>Live Demo</button>
+                                                <button className="button button3" onClick={this.handleClick}>Live Demo</button>
                                             </li>
                                         </ul>
                                     </figcaption>
                             </figure>
-                            <div className="product-rating2">
-                                <ul className="list-unstyled">
-                                    <li className="stars">
-                                        <span><i className="fa fa-star"></i></span>
-                                        <span><i className="fa fa-star"></i></span>
-                                        <span><i className="fa fa-star"></i></span>
-                                        <span><i className="fa fa-star"></i></span>
-                                        <span><i className="fa fa-star"></i></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
 
+                        </div>
+                <div className="product-rating2">
+                    <ul className="list-unstyled">
+                        <li className="stars">
+                            <span><i className="fa fa-star"></i></span>
+                            <span><i className="fa fa-star"></i></span>
+                            <span><i className="fa fa-star"></i></span>
+                            <span><i className="fa fa-star"></i></span>
+                            <span><i className="fa fa-star"></i></span>
+                        </li>
+                    </ul>
+                </div>
                         <div className="product-excerpt">
                             <h5>
                                 <a href="product.html"> {this.state.title}</a>
@@ -106,18 +137,16 @@ render()
                                         </p>
                                 </li>
                                 <li className="product_cat">
-                                    in
-                                    <a href="#">HTML</a>
+
+                                    <a href="#">{this.state.category}</a>
                                 </li>
                             </ul>
-                            <ul className="product-facts clearfix">
-                                <li className="price">$20</li>
-                                <li className="sells">
-                                    <span className="icon-basket"></span>52
-                                </li>
-                                <li className="product-fav">
-                                    <span className="icon-heart" title="Add to collection" data-toggle="tooltip"></span>
-                                </li>
+                            <ul >
+                                <li  className="price"><b >Version :</b> {this.state.version}</li>
+                                <li className="price"><b>Released :</b> {this.state.date_delivary}</li>
+                                <li className="price"><b>Updated  :</b> {this.state.date_update}</li>
+
+
                             </ul>
                         </div>
 
